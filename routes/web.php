@@ -51,7 +51,10 @@ Route::prefix('Repo')->middleware(\App\Http\Middleware\checklogin::class)->group
     Route::delete('/token/{id}',[\App\Http\Controllers\git\TokenController::class, 'destroy'])->name('repo.token.destroy');
 //    end token
 
+// branchs
+    Route::get('/branches/{username}/{repo}' , [\App\Http\Controllers\git\RepoSettingController::class, 'branches'])->name('repo.branches');
 
-    
+//    end branchs
+
 });
 

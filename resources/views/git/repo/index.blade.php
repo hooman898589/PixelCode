@@ -8,10 +8,10 @@
     <a href="/Repo/branches/{{$repo->username}}/{{$repo->repo}}" > open repository</a>
     <br>
     <br>
-    <a href="{{route('repo.edit',$repo->id)}}" >edit repo </a>
+    <a href="{{route('repo.edit',$repo->slug)}}" >edit repo </a>
     <br>
     <br>
-    <form action="{{route('repo.delete',$repo->id)}}" method="post">
+    <form action="{{route('repo.delete',$repo->slug)}}" method="post">
         @csrf
         @method('delete')
         <input type="submit" value="حذف">

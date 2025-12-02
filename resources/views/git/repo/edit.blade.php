@@ -1,6 +1,6 @@
 
 
-<form action="{{route('repo.update',$repo->id)}}" method="post">
+<form action="{{route('repo.update',$repo->slug)}}" method="post">
     @csrf
     @method('put')
     ریپازیتوری:<input type="text" name="repo" value="{{$repo->repo}}">

@@ -58,27 +58,33 @@ class RepoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        $repo=Repo::find($id);
+        $repo=Repo::where('slug', $slug)->firstOrFail();
         return view('git.repo.edit', compact('repo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $slug)
     {
         $data=$request->all();
+        unset($data["_token"]);
+        unset($data["_method"]);
+
         $data['user_id']=Auth::id();
-        $repo=Repo::findorfail($id);
+
+        $repo=Repo::where('slug', $slug)->firstOrFail();
+
         $validatedData = $request->validate([
             'username' => 'required',
             'repo' => 'required|max:100',
         ]);
-
+        $repo->slug=null;
         $repo->update($data);
-        $repo->save();
+
+
 
         $this->logActivete('update',$repo);
 
@@ -89,9 +95,9 @@ class RepoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        $repo=Repo::find($id);
+        $repo=Repo::where('slug', $slug)->firstOrFail();
         $repo->delete();
         $this->logActivete('delete',$repo);
 
