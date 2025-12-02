@@ -56,5 +56,11 @@ Route::prefix('Repo')->middleware(\App\Http\Middleware\checklogin::class)->group
 
 //    end branchs
 
+
+//    commits
+    Route::get('/commits/{username}/{repo}/{sha}',[\App\Http\Controllers\git\RepoSettingController::class, 'commits'])->name('repo.commits');
+
+//    end commits
+
 });
 

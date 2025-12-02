@@ -20,9 +20,9 @@ class RepoSettingController extends Controller
             $token = $token->token;
         }
         $url='https://api.github.com/repos/'.$username.'/'.$repo.'/branches';
-        $repo=Repo::with('branches')->where('username',$username)->where('repo',$repo)->first();
-        $bool=$repo->branches->isEmpty();
-      
+        $repodb=Repo::with('branches')->where('username',$username)->where('repo',$repo)->first();
+        $bool=$repodb->branches->isEmpty();
+
 
         if ($bool) {
             if (!empty($token)) {
@@ -41,18 +41,55 @@ class RepoSettingController extends Controller
             foreach ($branches as $branch) {
 
                 $branchdb=Branch::create([
-                    'repo_id' => $repo->id,
+                    'repo_id' => $repodb->id,
                     'name' => $branch['name'],
                     'sha' => $branch['commit']['sha'],
 
                 ]);
                 $this->logActivete('create',$branchdb);
 
+
             }
         }else {
-            $branches = $repo->branches;
+
+            $branches = $repodb->branches;
+
         }
-        return view('git.setting_repo.branches.index',compact('branches'));
+
+        return view('git.setting_repo.branches.index',compact('branches','username','repo'));
+
+    }
+
+
+
+
+
+    public function commits($username , $repo,$sha)
+    {
+        $token=token::where('user_id',Auth::id())->first();
+        if (!empty($token->token)) {
+            $token = $token->token;
+        }
+        if (!empty($token)) {
+            $auth = [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/vnd.github+json',
+            ];
+        } else {
+            $auth = [
+                'Accept' => 'application/vnd.github+json',
+            ];
+        }
+
+        $url='https://api.github.com/repos/'.$username.'/'.$repo.'/commits?sha='.$sha;
+
+
+        $commits_api = http::withHeaders($auth)->get($url);
+        $commits = $commits_api->json();
+//dd($commits);
+        return view('git.setting_repo.commits.commits',compact('commits','username','repo'));
+
+
 
     }
 }
