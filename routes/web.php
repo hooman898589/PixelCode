@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Account\LoginController;
+use App\Http\Controllers\git\RepoController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,5 +29,29 @@ Route::patch('/acceptpass/',[\App\Http\Controllers\Account\NewPasswordController
 
 
 
+Route::prefix('Repo')->middleware(\App\Http\Middleware\checklogin::class)->group(function () {
 
+
+
+// repo
+        Route::get('/',[RepoController::class, 'index'])->name('repo.index');
+        Route::get('/create',[RepoController::class, 'create'])->name('repo.create');
+        Route::post('/create',[RepoController::class, 'store'])->name('repo.store');
+        Route::get('/edit/{id}',[RepoController::class, 'edit'])->name('repo.edit');
+        Route::put('update/{id}',[RepoController::class, 'update'])->name('repo.update');
+        Route::delete('/{id}',[RepoController::class, 'destroy'])->name('repo.delete');
+//    end repo
+
+
+
+//    token
+    Route::get('/token/create',[\App\Http\Controllers\git\TokenController::class, 'create'])->name('repo.token.create');
+    Route::post('/token/create',[\App\Http\Controllers\git\TokenController::class, 'store'])->name('repo.token.store');
+    Route::get('/token',[\App\Http\Controllers\git\TokenController::class, 'index'])->name('repo.token.index');
+    Route::delete('/token/{id}',[\App\Http\Controllers\git\TokenController::class, 'destroy'])->name('repo.token.destroy');
+//    end token
+
+
+    
+});
 

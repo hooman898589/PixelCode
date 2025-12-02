@@ -32,5 +32,4 @@ return redirect('http://localhost:8000//');
     }
 
 
-
 }
