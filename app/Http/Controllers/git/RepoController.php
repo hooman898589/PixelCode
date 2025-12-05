@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\git;
 
 use App\Http\Controllers\Controller;
+use App\Models\addinproject;
 use App\Models\Repo;
 use App\Traits\LogActivete;
 use Illuminate\Http\Request;
@@ -42,7 +43,13 @@ class RepoController extends Controller
         ]);
         $data['user_id']=Auth::id();
         $repo = Repo::create($data);
-
+        $addinproject = Addinproject::create(
+            [
+                'project_id' => $repo->id,
+                'user_id' => Auth::id(),
+                'owner_id' => Auth::id(),
+            ]
+        );
         $this->logActivete('create',$repo);
 
         return redirect()->route('repo.index')->with('massage', 'ریپازیتوری با موفقیت ثبت شد');
@@ -98,6 +105,7 @@ class RepoController extends Controller
     public function destroy(string $slug)
     {
         $repo=Repo::where('slug', $slug)->firstOrFail();
+        $repo->additems()->delete();
         $repo->delete();
         $this->logActivete('delete',$repo);
 

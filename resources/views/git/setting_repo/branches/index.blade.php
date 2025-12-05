@@ -15,7 +15,7 @@ $sha=$branch['sha'];
     <span style="color: red" >{{$branch['name']}}</span>
     <br>
     <br>
-    <a href="/Repo/commits/{{$username}}/{{$repo}}/{{$sha}}"  >مشاهد کامیت ها</a>
+    <a href="/Repo/commits/{{$username}}/{{$repo}}/{{$branch['name']}}"  >مشاهد کامیت ها</a>
     <br>
     <br>
     ________________________________________________________________________

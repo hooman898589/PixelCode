@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Account\LoginController;
+use App\Http\Controllers\git\AddinprojectController;
 use App\Http\Controllers\git\RepoController;
 
 use Illuminate\Support\Facades\Route;
@@ -58,9 +59,31 @@ Route::prefix('Repo')->middleware(\App\Http\Middleware\checklogin::class)->group
 
 
 //    commits
-    Route::get('/commits/{username}/{repo}/{sha}',[\App\Http\Controllers\git\RepoSettingController::class, 'commits'])->name('repo.commits');
-
+    Route::get('/commits/{username}/{repo}/{branch}',[\App\Http\Controllers\git\RepoSettingController::class, 'commits'])->name('repo.commits');
 //    end commits
 
+
+
+//    files
+    Route::get('files/{sha}/{username}/{repo}/{branch}',[\App\Http\Controllers\git\RepoSettingController::class, 'files'])->name('repo.file');
+
+//    end file
+
+
+//  coDE
+    Route::get('code/{username}/{repo}/{branch}/', [\App\Http\Controllers\git\RepoSettingController::class, 'code'])->name('repo.code');
+/// end code
+
+
+
+
+
+
+//    add in project
+    Route::get('/add-in-project/create/{repo}',[\App\Http\Controllers\git\AddinprojectController::class, 'create'])->name('repo.add-in-project.create');
+    Route::post('/add-in-project/create/{repo}',[\App\Http\Controllers\git\AddinprojectController::class, 'store'])->name('repo.add-in-project.store');
+    Route::get('/add-in-project/{repo}',[AddinprojectController::class, 'index'])->name('repo.add-in-project.index');
+    Route::delete('/add-in-project/{repo}',[AddinprojectController::class, 'destroy'])->name('repo.add-in-project.destroy');
+//    end add in project
 });
 

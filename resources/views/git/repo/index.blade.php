@@ -16,7 +16,10 @@
         @method('delete')
         <input type="submit" value="حذف">
     </form>
-
+    <a href="/Repo/add-in-project/create/{{$repo->slug}}" >اضافه کردن کسی در ریپازیتوری</a>
+    <br>
+    <br>
+    <a href="/Repo/add-in-project/{{$repo->slug}}">دیدن افراد ادشده</a>
     <br>
     <br>
 

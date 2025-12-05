@@ -35,4 +35,10 @@ class Repo extends Model
             ]
         ];
     }
+
+
+    public function additems()
+    {
+        return $this->hasOne(addinproject::class, 'project_id', 'id')->select('id');
+    }
 }

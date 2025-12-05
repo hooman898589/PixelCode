@@ -13,7 +13,7 @@
 
 <br>
 <br>
-    <a href="/Repo/codes/{{$commit['sha']}}/{{$username}}/{{$repo}}" >{{$commit['commit']['message']}}</a>
+    <a href="/Repo/files/{{$commit['sha']}}/{{$username}}/{{$repo}}/{{$branch}}" >{{$commit['commit']['message']}}</a>
 
     <br>
     <br>
@@ -27,3 +27,10 @@
     <br>
     _____________________________________________________________________________________
 @endforeach
+<br>
+<br>
+<a href="?page={{$page+=1}}">بیشتر</a>
+
+<br>
+<br>
+<a href="?page={{$page-=2}}">قبلی</a>
